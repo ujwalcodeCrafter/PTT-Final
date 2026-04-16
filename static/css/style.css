@@ -1,0 +1,208 @@
+/* FoodGuard - Food Image Fraud Detector */
+
+/* Base */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Upload Zone */
+.upload-zone {
+    border: 3px dashed rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.upload-zone:hover,
+.upload-zone.drag-over {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.upload-zone.drag-over {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* Verdict Card */
+#verdict-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.gauge-fill {
+    transition: stroke-dashoffset 1.5s ease-out;
+}
+
+/* Report */
+.feature-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.feature-item:last-child {
+    border-bottom: none;
+}
+
+/* Cards */
+.card {
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* Gallery */
+.gallery-card {
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.gallery-img {
+    height: 150px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card:hover .gallery-img {
+    transform: scale(1.05);
+}
+
+/* Footer */
+.footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Badge styles */
+.risk-badge-low {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.risk-badge-medium {
+    background: linear-gradient(135deg, #ffc107, #e0a800);
+    color: #333;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.risk-badge-high {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Results animation */
+.result-animate {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Toast */
+.toast {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Image heatmap container */
+#heatmap-container img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* About page */
+.list-group-item {
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.list-group-item:first-child {
+    border-top: none !important;
+}
+
+.list-group-item:last-child {
+    border-bottom: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .upload-zone {
+        padding: 20px 15px;
+    }
+
+    .gallery-img {
+        height: 100px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    body:not([data-bs-theme="light"]) {
+        background-color: #1a1a2e;
+        color: #eee;
+    }
+}

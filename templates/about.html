@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}About — FoodGuard{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="fw-bold mb-4"><i class="bi bi-info-circle me-2"></i>About FoodGuard</h1>
+
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <h4 class="fw-bold">What is Food Image Fraud Detection?</h4>
+                    <p class="text-muted">
+                        With the rise of AI-generated images and advanced image editing tools, it has become increasingly difficult to trust food images online.
+                        This can have serious implications for food delivery platforms, restaurant reviews, and food safety documentation.
+                    </p>
+                    <p class="text-muted">
+                        The <strong>Food Image Fraud Detector</strong> uses a multi-stage forensic analysis pipeline to determine whether a food image
+                        is genuine (photographed in the real world) or fake (AI-generated or digitally manipulated).
+                    </p>
+                </div>
+            </div>
+
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <h4 class="fw-bold">How It Works</h4>
+                    <p class="text-muted mb-3">Our system processes each image through 6 forensic stages:</p>
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex">
+                            <span class="badge bg-primary me-3 my-auto">1</span>
+                            <div>
+                                <strong>Metadata Analysis</strong>
+                                <p class="text-muted small mb-0">Examines EXIF data, file properties, and header information for anomalies that indicate manipulation.</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex">
+                            <span class="badge bg-info me-3 my-auto">2</span>
+                            <div>
+                                <strong>Preprocessing</strong>
+                                <p class="text-muted small mb-0">Standardizes images through resizing, normalization, and color space conversions for consistent analysis.</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex">
+                            <span class="badge bg-warning me-3 my-auto">3</span>
+                            <div>
+                                <strong>Spatial Feature Analysis</strong>
+                                <p class="text-muted small mb-0">Detects artifacts in pixel patterns, edge irregularities, and color distribution anomalies (18 features).</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex">
+                            <span class="badge bg-danger me-3 my-auto">4</span>
+                            <div>
+                                <strong>Frequency Analysis</strong>
+                                <p class="text-muted small mb-0">Applies Fast Fourier Transform (FFT) to detect unusual frequency patterns typical of AI-generated images (10 features).</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex">
+                            <span class="badge bg-secondary me-3 my-auto">5</span>
+                            <div>
+                                <strong>Region-Based Analysis</strong>
+                                <p class="text-muted small mb-0">Divides the image into a 4x4 grid and detects statistically anomalous patches (8 features).</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex">
+                            <span class="badge bg-success me-3 my-auto">6</span>
+                            <div>
+                                <strong>ML Classification</strong>
+                                <p class="text-muted small mb-0">A Random Forest classifier combines all 40 extracted features to produce a final fraud probability score and risk assessment.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <h4 class="fw-bold">Dataset</h4>
+                    <p class="text-muted">
+                        The model was trained on a labeled dataset of real food photographs and AI-generated/fake food images.
+                        Real images are captured from actual food items, while fake images are synthetically generated to mimic food photography.
+                    </p>
+                    <div class="row text-center mt-3">
+                        <div class="col-6">
+                            <div class="p-3 bg-success bg-opacity-10 rounded">
+                                <h3 class="fw-bold text-success mb-0">{{ real_count if real_count else "50+" }}</h3>
+                                <small class="text-muted">Real Photos</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 bg-danger bg-opacity-10 rounded">
+                                <h3 class="fw-bold text-danger mb-0">{{ fake_count if fake_count else "50+" }}</h3>
+                                <small class="text-muted">Fake Images</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4 class="fw-bold">Technology Stack</h4>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <span class="badge bg-dark">Flask</span>
+                        <span class="badge bg-dark">Python</span>
+                        <span class="badge bg-dark">NumPy</span>
+                        <span class="badge bg-dark">OpenCV</span>
+                        <span class="badge bg-dark">scikit-learn</span>
+                        <span class="badge bg-dark">Random Forest</span>
+                        <span class="badge bg-dark">Bootstrap 5</span>
+                        <span class="badge bg-dark">FFT Analysis</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

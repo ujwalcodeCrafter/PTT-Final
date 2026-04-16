@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Gallery — FoodGuard{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <h2 class="fw-bold mb-2"><i class="bi bi-images me-2"></i>Image Gallery</h2>
+    <p class="text-muted mb-4">Dataset samples — click any image to analyze it</p>
+
+    <ul class="nav nav-tabs mb-3" id="galleryTabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-tab="real" href="#">
+                <i class="bi bi-check-circle me-1"></i>Real Images ({{ real_count }})
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-tab="fake" href="#">
+                <i class="bi bi-x-circle me-1"></i>Fake Images ({{ fake_count }})
+            </a>
+        </li>
+    </ul>
+
+    <div id="real-gallery" class="gallery-grid row g-3">
+        {% for img in real_images %}
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 gallery-item">
+            <div class="card gallery-card h-100 shadow-sm">
+                <img src="{{ url_for('static', filename='images/real/' + img) }}" class="card-img-top gallery-img" alt="{{ img }}">
+                <div class="card-body p-2 text-center">
+                    <small class="text-muted text-truncate d-block">{{ img }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="fake-gallery" class="gallery-grid row g-3" style="display:none">
+        {% for img in fake_images %}
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2 gallery-item">
+            <div class="card gallery-card h-100 shadow-sm">
+                <img src="{{ url_for('static', filename='images/fake/' + img) }}" class="card-img-top gallery-img" alt="{{ img }}">
+                <div class="card-body p-2 text-center">
+                    <small class="text-muted text-truncate d-block">{{ img }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="gallery-modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="gallery-modal-title">Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="gallery-modal-img" src="" class="img-fluid rounded" style="max-height:60vh;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="gallery-analyze-btn" class="btn btn-primary" data-bs-dismiss="modal">
+                        <i class="bi bi-search me-1"></i>Analyze
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('#galleryTabs .nav-link').forEach(tab => {
+    tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('#galleryTabs .nav-link').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const target = tab.dataset.tab;
+        document.getElementById('real-gallery').style.display = target === 'real' ? '' : 'none';
+        document.getElementById('fake-gallery').style.display = target === 'fake' ? '' : 'none';
+    });
+});
+
+let pendingGalleryImage = null;
+
+document.querySelectorAll('.gallery-img').forEach(img => {
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+        pendingGalleryImage = img.src;
+        document.getElementById('gallery-modal-title').textContent = img.alt;
+        document.getElementById('gallery-modal-img').src = img.src;
+        new bootstrap.Modal(document.getElementById('gallery-modal')).show();
+    });
+});
+
+document.getElementById('gallery-analyze-btn').addEventListener('click', () => {
+    if (pendingGalleryImage) {
+        // Store the image URL in sessionStorage for the home page to pick up
+        sessionStorage.setItem('gallery_image_url', pendingGalleryImage);
+    }
+    // Simply redirect - the home page will auto-trigger analysis on load
+    window.location.href = '/';
+});
+</script>
+{% endblock %}
